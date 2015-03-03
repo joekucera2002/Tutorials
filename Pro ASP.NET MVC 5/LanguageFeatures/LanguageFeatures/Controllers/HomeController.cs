@@ -64,5 +64,95 @@ namespace LanguageFeatures.Controllers
 
             return View("Result", (Object)stringArray[1]);
         }
+
+        // GET: Home/UseExtension
+        public ViewResult UseExtension()
+        {
+            // Create and populate ShoppingCart
+            ShoppingCart cart = new ShoppingCart
+            {
+                Products = new List<Product>
+                {
+                    new Product {Name = "Kayak", Price = 275M},
+                    new Product {Name = "Lifejacket", Price = 48.95M},
+                    new Product {Name = "Soccer ball", Price = 19.50M},
+                    new Product {Name = "Corner flag", Price = 34.95M}
+                }
+            };
+
+            // Get the total value of the products in the cart
+            Decimal cartTotal = cart.TotalPrices();
+
+            return View("Result", (Object)String.Format("Total: {0:c}", cartTotal));
+        }
+
+        // GET: Home/UseExtensionEnumerable
+        public ViewResult UseExtensionEnumerable()
+        {
+            IEnumerable<Product> products = new ShoppingCart
+            {
+                Products = new List<Product>
+                {
+                    new Product {Name = "Kayak", Price = 275M},
+                    new Product {Name = "Lifejacket", Price = 48.95M},
+                    new Product {Name = "Soccer ball", Price = 19.50M},
+                    new Product {Name = "Corner flag", Price = 34.95M}
+                }
+            };
+
+            // Create and populate an array of Product objects
+            Product[] productArray =
+            {
+                new Product {Name = "Kayak", Price = 275M},
+                new Product {Name = "Lifejacket", Price = 48.95M},
+                new Product {Name = "Soccer ball", Price = 19.50M},
+                new Product {Name = "Corner flag", Price = 34.95M}
+            };
+
+            // Get the total value of the products in the cart
+            Decimal cartTotal = products.TotalPrices();
+            Decimal arrayTotal = productArray.TotalPrices();
+
+            return View("Result", (Object)String.Format("Cart total: {0}, Array Total: {1}", cartTotal, arrayTotal));
+        }
+
+        // GET: Home/UseFilterExtensionMethod
+        public ViewResult UseFilterExtensionMethod()
+        {
+            IEnumerable<Product> products = new ShoppingCart
+            {
+                Products = new List<Product>
+                {
+                    new Product {Name = "Kayak", Category = "Watersports", Price = 275M},
+                    new Product
+                    {
+                        Name = "Lifejacket",
+                        Category = "Watersports",
+                        Price = 48.95M
+                    },
+                    new Product
+                    {
+                        Name = "Soccer ball",
+                        Category = "Soccer",
+                        Price = 19.50M
+                    },
+                    new Product
+                    {
+                        Name = "Corner flag",
+                        Category = "Soccer",
+                        Price = 34.95M
+                    }
+                }
+            };
+
+            Decimal total = 0;
+
+            foreach (Product prod in products.FilterByCategory("Soccer"))
+            {
+                total += prod.Price;
+            }
+
+            return View("Result", (Object) String.Format("Total: {0}", total));
+        }
     }
 }
