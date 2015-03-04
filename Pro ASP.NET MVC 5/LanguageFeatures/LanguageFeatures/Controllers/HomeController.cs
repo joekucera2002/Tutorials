@@ -123,7 +123,12 @@ namespace LanguageFeatures.Controllers
             {
                 Products = new List<Product>
                 {
-                    new Product {Name = "Kayak", Category = "Watersports", Price = 275M},
+                    new Product
+                    {
+                        Name = "Kayak", 
+                        Category = "Watersports", 
+                        Price = 275M
+                    },
                     new Product
                     {
                         Name = "Lifejacket",
@@ -147,7 +152,7 @@ namespace LanguageFeatures.Controllers
 
             Decimal total = 0;
 
-            foreach (Product prod in products.FilterByCategory("Soccer"))
+            foreach (Product prod in products.Filter((prod) => prod.Category == "Soccer" || prod.Price > 20))
             {
                 total += prod.Price;
             }
