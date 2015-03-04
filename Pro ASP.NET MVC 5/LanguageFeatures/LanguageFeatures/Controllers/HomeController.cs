@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using LanguageFeatures.Models;
@@ -158,6 +159,90 @@ namespace LanguageFeatures.Controllers
             }
 
             return View("Result", (Object) String.Format("Total: {0}", total));
+        }
+
+        // GET: Home/CreateAnonArray
+        public ViewResult CreateAnonArray()
+        {
+            var oddsAndEnds = new[]
+            {
+                new
+                {
+                    Name = "MVC",
+                    Category = "Pattern"
+                },
+                new
+                {
+                    Name = "Hat",
+                    Category = "Clothing"
+                },
+                new
+                {
+                    Name = "Apple",
+                    Category = "Fruit"
+                }
+            };
+
+            StringBuilder result = new StringBuilder();
+
+            foreach (var item in oddsAndEnds)
+            {
+                result.Append(item.Name).Append(" ");
+            }
+
+            return View("Result", (Object) result.ToString());
+        }
+
+        // GET: Home/FindProducts
+        public ViewResult FindProducts()
+        {
+            Product[] products =
+            {
+                new Product
+                {
+                    Name = "Kayak",
+                    Category = "Watersports",
+                    Price = 275M
+                },
+                new Product
+                {
+                    Name = "Lifejacket",
+                    Category = "Watersports",
+                    Price = 48.95M
+                },
+                new Product
+                {
+                    Name = "Soccer Ball",
+                    Category = "Soccer",
+                    Price = 19.50M
+                },
+                new Product
+                {
+                    Name = "Corner Flag",
+                    Category = "Soccer",
+                    Price = 34.95M
+                }
+            };
+
+            var foundProducts =
+                products.OrderByDescending(e => e.Price)
+                    .Take(3)
+                    .Select(e => 
+                        new
+                        {
+                            e.Name, 
+                            e.Price
+                        });
+
+            // Create the result
+            StringBuilder result = new StringBuilder();
+
+            foreach (var p in foundProducts)
+            {
+                result.AppendFormat("Price: {0}", p.Price);
+            }
+
+            return View("Result", (Object) result.ToString());
         }
     }
 }
