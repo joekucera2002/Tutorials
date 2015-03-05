@@ -23,5 +23,11 @@ namespace Razor.Controllers
         {
             return View(myProduct);
         }
+
+        // GET: Home/NameAndPrice
+        public ActionResult NameAndPrice()
+        {
+            return View(myProduct);
+        }
     }
 }
