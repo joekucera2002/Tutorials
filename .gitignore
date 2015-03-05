@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Pro ASP.NET MVC 5/LanguageFeatures/LanguageFeatures/bin
+/Pro ASP.NET MVC 5/LanguageFeatures/LanguageFeatures/obj/Debug
